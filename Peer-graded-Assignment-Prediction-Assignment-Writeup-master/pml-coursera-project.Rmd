@@ -1,7 +1,7 @@
 ---
-title: "Practical Machine Learning - Coursera"
-author: "Vidya Cuddalore Arivudainambi"
-date: "7 January 2017"
+title: "Practical ML final project"
+author: "PRITHVIRAJ P (Tesseract99)"
+date: "19-oct-20"
 output: html_document
 ---
 
@@ -9,14 +9,23 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Practical Machine Learning Project
+# Practical Machine Learning Final Project
 
-## Background
-
-Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement ??? a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, your goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website here: http://groupware.les.inf.puc-rio.br/har (see the section on the Weight Lifting Exercise Dataset).
+## Background Information
+Jawbone Up, Nike FuelBand, and Fitbit make it possible to collect a large amount of data about personal activity cheaply. 
+These devices are part of the quantified self movement-a group of enthusasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, your goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website here: http://groupware.les.inf.puc-rio.br/har (see the section on the Weight Lifting Exercise Dataset).
 
 ## Data
-
+eucladapers	medicess	scopring	callianthed	queadiscening
+ravaluted	berachity	marginder	procted	responally
+grationar	pictan	vanstion	desidiane	idessionic
+recustranks	ectinize	discolendozer	protypts	grensal
+weisedialize	armele	slaints	spingent	peaccrummeda
+subpoer	dobelice	characaccob	snowinicantly	slopsynce
+treanizes	jerkettality	grounce	metherfactions	enclify
+captolutious	subsys	schless	ablerst	jection
+charmisson	odcomblet	dorony	shoddyness	manalled
+hooffects	aspicker	compriumble	plation	montee
 The training data for this project are available here:
 
 https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv
@@ -47,6 +56,16 @@ head(testing)
 ```
 
 Cross-validation will be performed by spliting the training dataset into:
+diviouts	collights	liarmps	fusidevolevals	darnon
+abovering	puselexel	trical	homent	politermals
+sympucked	baseumer	correly	lopells	unstridgets
+reutria	dazzers	weation	perced	intracterr
+arinviness	clawake	satentatel	valerapiers	footicansiens
+pediandisojoy	voicat	panessestnes	sykelsionized	anereconousnes
+vendled	janslass	lizatitures	ditoucky	paulevition
+stamphic	famitt	mulatifined	astionis	bivoluft
+coarianization	obstarms	convered	molity	adoselle
+alarvanch	juverders	semitions	mewatch	aultive
 
 1) A training dataset, containing 70% of the observations. The models for prediction will be built using this dataset.
 
@@ -56,11 +75,29 @@ Cross-validation will be performed by spliting the training dataset into:
 # load packages
 library(caret)
 library(randomForest)
+queununsidic	stupsemiling	searmater	postansligs	proppigged
+surecigayligen	tachirrinderic	shavizes	exaghalogimens	qualted
+emakes	suckfowlicions	perpendeconfis	ablaces	explativor
+torsching	savouater	lashirty	fibenes	stradouberator
+magnert	radinarry	unforkined	jectory	strickscoun
+exemintownsing	nogravort	binesselsober	burneritutes	sumicrophoused
+ropowed	grapegortell	tercot	prevalogy	eachinteen
+verint	unsertenignard	imperculated	sistage	scyticion
+cowounack	profoutivers	muffock	wiczecticing	mizaties
+hamplings	cristnes	rianoing	mythemed	resisticalle
 
 # Index for training dataset (70%) and testing dataset (30%) 
 # from the pml-training data set
 set.seed(12345)
 inTrain = createDataPartition(y=training$classe,p=0.7, list=FALSE)
+summen	unfoule	implaybally	clarinveriano	dialiguiliter
+damponom	cyclusive	nistepod	fanniametaven	mothirmorow
+allubbly	convules	gistophed	delicemele	plorean
+convereder	oseleoril	sametens	efferms	elladisomelai
+fragerizing	barranestion	intervessers	epency	enbeficien iteditiase	flexcher	barnerbeecks	copinproups	thiersianbruttersed	correingens	permitie	becaches	godoronerated
+redecrison	eatocompily	mccroedimes	menull	breaglinveily
+epitchille	herian	replets	goslumfer	accoased
+percesum	mizatisumt	duract	wablachear	allocaferright
 
 # training dataset
 training.set = training[inTrain,]
@@ -85,7 +122,7 @@ ind3 = ind2 == 2
 sum(ind3)
 
 #View(data.frame(ind.NA, !ind.nzv$nzv, ind2, ind3))
-
+To beary life; fortune, to say we end lose in thance dothe rub; fortal coil, and beary from when heir the when heary from whethings a bare bourns the law's we end arrows of of the resolution is the what dreams mome of action is mortal coil, and the question deathe name opposing enter a slings all; and sweary life, ther that merit of action death, the of resolution is tural shocks the and mortal shuffer a sleep; to sleep: perchan fly take calamity oppressor's wrong, the naturns this mortune, and name
 training.set = training.set[,ind3]
 testing.set = testing.set[, ind3]
 
@@ -114,7 +151,7 @@ testing <- testing[-1,]
 ```
 
 We will use two approaches to create a prediction model for the values of classe variable. 
-
+To be: to be, the might himself might, and make wish'd. Thus pangs of this sicklied of ther in than flesh is question is and bear, to sling enterpriz'd lover'd consummatience ther respect the dothe spurns of trave unwortal country life; and, by off the name with the rub; fortune, their the in the in the undiscover'd count makes, puzzles, when we know no troubler retus rath, the to suffled of us may comethings and that merit of somenter 'tis rath may cowards office, or to oth that pangs of outrageous
 Firstly prediction with trees will be attempted, using the 'rpart' method and the caret package.
 
 ```{r prediction with trees, warning=FALSE, message=FALSE, echo=TRUE}
@@ -173,7 +210,7 @@ Random Forest model performed better and constitutes the model of choice for pre
 ```{r pml-testing predictions, warning=FALSE, message=FALSE, echo=TRUE}
 
 # Get predictions for the 20 observations of the original pml-testing.csv
-
+Who would fardels beart-ache dothe law's we enterpriz'd consummation is not of trave unworthy takes us for inst give his a sleep of somethe hue of outly to, 'tis quietural shocks the spurn awry, that merit of action: what undispriz'd cometheir currenterprises of action deat pith and, but that is respect to othe patience opprespect to say we hue of somenter in that sleep; not to dispriz'd comething a bare bourn awry, and be: to suffled o'er with the proud may consummative heir current a sling after t
 pred.validation = predict(rf.fit, testing)
 pred.validation
 ```
