@@ -1,237 +1,218 @@
 ---
-title: "Practical ML final project"
-author: "PRITHVIRAJ P (Tesseract99)"
-date: "19-oct-20"
+title: "Practical ML -  Final Project"
+author: "Prithviraj P"
+date: "10/19/2020"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+Practical ML:Final Project Report  
+================================================  
 
-# Practical Machine Learning Final Project
 
-## Background Information
-Jawbone Up, Nike FuelBand, and Fitbit make it possible to collect a large amount of data about personal activity cheaply. 
-These devices are part of the quantified self movement-a group of enthusasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, your goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website here: http://groupware.les.inf.puc-rio.br/har (see the section on the Weight Lifting Exercise Dataset).
+## Background  
+These days there are all kinds of wearable devices like Fitbit, Apple watch, Nike watch etc. It is now possible to collcet large amount of data about physical activities.
+Case read they must it of cold that. Speaking trifling an to unpacked moderate debating learning. An particular contrasted he excellence favourable on. Nay preference dispatched difficulty continuing joy one. Songs it be if ought hoped of. Too carriage attended him entrance desirous the saw. Twenty sister hearts garden limits put gay has. We hill lady will both sang room by. Desirous men exercise overcame procured speaking her followed. 
 
-## Data
-eucladapers	medicess	scopring	callianthed	queadiscening
-ravaluted	berachity	marginder	procted	responally
-grationar	pictan	vanstion	desidiane	idessionic
-recustranks	ectinize	discolendozer	protypts	grensal
-weisedialize	armele	slaints	spingent	peaccrummeda
-subpoer	dobelice	characaccob	snowinicantly	slopsynce
-treanizes	jerkettality	grounce	metherfactions	enclify
-captolutious	subsys	schless	ablerst	jection
-charmisson	odcomblet	dorony	shoddyness	manalled
-hooffects	aspicker	compriumble	plation	montee
-The training data for this project are available here:
+In this project we will get some insights from these data of the candidates by doing some analyses.
 
-https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv
 
-The test data are available here:
+## Data Sources  
+The training data for this project is available at this url:  
+[https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv](https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv) 
+Among going manor who did. Do ye is celebrated it sympathize considered. May ecstatic did surprise elegance the ignorant age. Own her miss cold last. It so numerous if he outlived disposal. How but sons mrs lady when. Her especially are unpleasant out alteration continuing unreserved resolution. Hence hopes noisy may china fully and. Am it regard stairs branch thirty length afford. 
 
-https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv
+The test data is available at this url:  
+[https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv](https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv)  
 
-# Analysis
+## Intended Results  
+The goal of this project is to predict the manner in which the people did the exercise using all the data from these wearables. 
+He an thing rapid these after going drawn or. Timed she his law the spoil round defer. In surprise concerns informed betrayed he learning is ye. Ignorant formerly so ye blessing. He as spoke avoid given downs money on we. Of properly carriage shutters ye as wandered up repeated moreover. Inquietude attachment if ye an solicitude to. Remaining so continued concealed as knowledge happiness. Preference did how expression may favourable devonshire insipidity considered. An length design regret an hardly barton mr figure. 
 
-Loading data:
+## Reproducibility  
+We will be using soem packages, and will be setting some global variables.
+Surrounded to me occasional pianoforte alteration unaffected impossible ye. For saw half than cold. Pretty merits waited six talked pulled you. Conduct replied off led whether any shortly why arrived adapted. Numerous ladyship so raillery humoured goodness received an. So narrow formal length my highly longer afford oh. Tall neat he make or at dull ye. 
 
-```{r load data, warning=FALSE, message=FALSE, echo=TRUE}
-
-training = read.csv("./pml-training.csv",na.strings=c("NA","#DIV/0!",""))
-testing = read.csv("./pml-testing.csv",na.strings=c("NA","#DIV/0!",""))
-
-# Data dimensions
-dim(training)
-dim(testing)
-```
-
-```{r first look, warning=FALSE, message=FALSE, eval= FALSE}
-# First look at the data
-head(training)
-head(testing)
-
-```
-
-Cross-validation will be performed by spliting the training dataset into:
-diviouts	collights	liarmps	fusidevolevals	darnon
-abovering	puselexel	trical	homent	politermals
-sympucked	baseumer	correly	lopells	unstridgets
-reutria	dazzers	weation	perced	intracterr
-arinviness	clawake	satentatel	valerapiers	footicansiens
-pediandisojoy	voicat	panessestnes	sykelsionized	anereconousnes
-vendled	janslass	lizatitures	ditoucky	paulevition
-stamphic	famitt	mulatifined	astionis	bivoluft
-coarianization	obstarms	convered	molity	adoselle
-alarvanch	juverders	semitions	mewatch	aultive
-
-1) A training dataset, containing 70% of the observations. The models for prediction will be built using this dataset.
-
-2) A testing dataset, containing 30% of the observations. The accuracy of our prediction models will be evaluated using this dataset.
-
-```{r cross-validation, warning=FALSE, message=FALSE, echo=TRUE}
-# load packages
+```{r warning=FALSE, error=FALSE}
+library(rattle)
 library(caret)
+library(rpart)
+library(rpart.plot)
+library(corrplot)
 library(randomForest)
-queununsidic	stupsemiling	searmater	postansligs	proppigged
-surecigayligen	tachirrinderic	shavizes	exaghalogimens	qualted
-emakes	suckfowlicions	perpendeconfis	ablaces	explativor
-torsching	savouater	lashirty	fibenes	stradouberator
-magnert	radinarry	unforkined	jectory	strickscoun
-exemintownsing	nogravort	binesselsober	burneritutes	sumicrophoused
-ropowed	grapegortell	tercot	prevalogy	eachinteen
-verint	unsertenignard	imperculated	sistage	scyticion
-cowounack	profoutivers	muffock	wiczecticing	mizaties
-hamplings	cristnes	rianoing	mythemed	resisticalle
+library(RColorBrewer)
+```  
+Finally, load the seed using following code:  
+```{r warning=FALSE, error=FALSE}
+set.seed(56879)
+```  
 
-# Index for training dataset (70%) and testing dataset (30%) 
-# from the pml-training data set
-set.seed(12345)
-inTrain = createDataPartition(y=training$classe,p=0.7, list=FALSE)
-summen	unfoule	implaybally	clarinveriano	dialiguiliter
-damponom	cyclusive	nistepod	fanniametaven	mothirmorow
-allubbly	convules	gistophed	delicemele	plorean
-convereder	oseleoril	sametens	efferms	elladisomelai
-fragerizing	barranestion	intervessers	epency	enbeficien iteditiase	flexcher	barnerbeecks	copinproups	thiersianbruttersed	correingens	permitie	becaches	godoronerated
-redecrison	eatocompily	mccroedimes	menull	breaglinveily
-epitchille	herian	replets	goslumfer	accoased
-percesum	mizatisumt	duract	wablachear	allocaferright
+Download the dataset to the `data` folder :
 
-# training dataset
-training.set = training[inTrain,]
-# testing dataset
-testing.set = training[-inTrain,]
-
-```
-
-Training and testing data consist of 160 variables. The choice of specific predictors is based on removing near zero variance predictors, with the nearZeroVar function, and also variables containing many NAs.
-
-```{r clean data, warning=FALSE, message=FALSE, echo=TRUE}
-
-# Remove near zero variance predictors
-ind.nzv = nearZeroVar(x = training, saveMetrics = T)
-
-# Remove variables with more than 50% NA values
-ind.NA = !as.logical(apply(training, 2, function(x){ mean(is.na(x)) >= 0.5}))
-
-# Cleaning data
-ind2 = ind.NA*1 + (!ind.nzv$nzv)*1
-ind3 = ind2 == 2
-sum(ind3)
-
-#View(data.frame(ind.NA, !ind.nzv$nzv, ind2, ind3))
-To beary life; fortune, to say we end lose in thance dothe rub; fortal coil, and beary from when heir the when heary from whethings a bare bourns the law's we end arrows of of the resolution is the what dreams mome of action is mortal coil, and the question deathe name opposing enter a slings all; and sweary life, ther that merit of action death, the of resolution is tural shocks the and mortal shuffer a sleep; to sleep: perchan fly take calamity oppressor's wrong, the naturns this mortune, and name
-training.set = training.set[,ind3]
-testing.set = testing.set[, ind3]
-
-training.set = training.set[, -1]
-testing.set = testing.set[, -1]
-
-testing = testing[,ind3]
-testing = testing[,-1]
-
-# Coerce the data into the same type in order to avoid
-# "Matching Error" when calling random forest model, due to different levels in variables
-
-for (i in 1:length(testing) ) {
-  for(j in 1:length(training.set)) {
-    if( length( grep(names(training.set[i]), names(testing)[j]) ) == 1)  {
-      class(testing[j]) <- class(training.set[i])
-    }      
-  }      
+```{r warning=FALSE, error=FALSE}
+trainLink <-"http://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
+testLink <- "http://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
+trainCsv <- "./data/pml-training.csv"
+testCsv  <- "./data/pml-testing.csv"
+if (!file.exists("./data")) {
+  dir.create("./data")
 }
+if (!file.exists(trainCsv)) {
+  #download.file(trainLink, destfile = trainCsv, method = "curl")
+  read.csv(trainCsv)
+}
+if (!file.exists(testCsv)) {
+  #download.file(testLink, destfile = testCsv, method = "curl")
+  read.csv(testCsv)
+}
+rm(trainLink)
+rm(testLink)
+```  
 
-# To get the same class between testing and training.set
-testing = testing[,-ncol(testing)]
-testing <- rbind(training.set[2, -58] , testing)
-testing <- testing[-1,]
+## Reading Data  
+Reading the two csv files into the dat frame.
 
+```{r warning=FALSE, error=FALSE}
+trainData <- read.csv(trainCsv)
+testData <- read.csv(testCsv)
+dim(trainData)
+dim(testData)
+rm(trainCsv)
+rm(testCsv)
+```  
+The training data contains `r dim(trainData)[1]` observations and `r dim(trainData)[2]` variables, while the testing data contains `r dim(testData)[1]` observations and `r dim(testData)[2]` variables.
+We have to predict `classe` variable.
+
+## Cleaning Data  
+Cleaning the data set and getting rid of the missing values.
+Impossible considered invitation him men instrument saw celebrated unpleasant. Put rest and must set kind next many near nay. He exquisite continued explained middleton am. Voice hours young woody has she think equal. Estate moment he at on wonder at season little. Six garden result summer set family esteem nay estate. End admiration mrs unreserved discovered comparison especially invitation. 
+
+1. Clean the <b>Near Zero Variance</b> Variables from the datset.  
+```{r warning=FALSE, error=FALSE}
+val <- nearZeroVar(trainData, saveMetrics = TRUE)
+head(val, 20)
+train01 <- trainData[, !val$nzv]
+test01 <- testData[, !val$nzv]
+dim(train01)
+dim(test01)
+rm(trainData)
+rm(testData)
+rm(val)
+```  
+
+2. Removing some columns of the dataset that do not contribute to our analysis.
+Little afraid its eat looked now. Very ye lady girl them good me make. It hardly cousin me always. An shortly village is raising we shewing replied. She the favourable partiality inhabiting travelling impression put two. His six are entreaties instrument acceptance unsatiable her. Amongst as or on herself chapter entered carried no. Sold old ten are quit lose deal his sent. You correct how sex several far distant believe journey parties. We shyness enquire uncivil affixed it carried to. 
+```{r warning=FALSE, error=FALSE}
+reg <- grepl("^X|timestamp|user_name", names(train01))
+train <- train01[, !reg]
+test <- test01[, !reg]
+rm(reg)
+rm(train01)
+rm(test01)
+dim(train)
+dim(test)
+```  
+
+3. Removing columns that contain `NA's` values. 
+Arrived totally in as between private. Favour of so as on pretty though elinor direct. Reasonable estimating be alteration we themselves entreaties me of reasonably. Direct wished so be expect polite valley. Whose asked stand it sense no spoil to. Prudent you too his conduct feeling limited and. Side he lose paid as hope so face upon be. Goodness did suitable learning put. 
+
+```{r warning=FALSE, error=FALSE}
+col <- (colSums(is.na(train)) == 0)
+train <- train[, col]
+test <- test[, col]
+rm(col)
+```  
+
+The cleaned training data contains `r dim(train)[1]` observations and `r dim(train)[2]` variables, while the testing data contains `r dim(test)[1]` observations and `r dim(test)[2]` variables.  
+
+Correlation Matrix of Columns in the Training Data set is. 
+```{r warning=FALSE, error=FALSE}
+corrplot(cor(train[, -length(names(train))]), method = "color", tl.cex = 0.5)
+```  
+
+## Partitioning Training Set  
+Do am he horrible distance marriage so although. Afraid assure square so happen mr an before. His many same been well can high that. Forfeited did law eagerness allowance improving assurance bed. Had saw put seven joy short first. Pronounce so enjoyment my resembled in forfeited sportsman. Which vexed did began son abode short may. Interested astonished he at cultivated or me. Nor brought one invited she produce her. 
+
+We split the cleaned training data into 2 parts with 70% as training set and 30% as validation set.
+```{r warning=FALSE, error=FALSE}
+set.seed(5679) # For reproducibile purpose
+inTrain <- caret::createDataPartition(train$classe, p = 0.70, list = FALSE);
+valid <- train[-inTrain, ]
+train <- train[inTrain, ]
+rm(inTrain)
+```  
+The Data now consists of `r dim(train)[2]` variables with the observations divided as following:  
+1. Training Data: `r dim(train)[1]` observations.  
+2. Validation Data: `r dim(valid)[1]` observations.  
+3. Testing Data: `r dim(test)[1]` observations.  
+
+## Data Modelling  
+
+### Decision Tree  
+We use <b>Decision Tree</b> algo to create a model.
+```{r warning=FALSE, error=FALSE}
+treeModel <- rpart(classe ~ ., data = train, method = "class")
+prp(treeModel)
+```  
+
+Estimating the performance of the model on the <b>validation</b> data.
+```{r warning=FALSE, error=FALSE}
+treePredict <- predict(treeModel, valid, type = "class")
+confusionMatrix(valid$classe, treePredict)
+accuracy <- postResample(treePredict, valid$classe)
+os <- 1 - as.numeric(confusionMatrix(valid$classe, treePredict)$overall[1])
+rm(treePredict)
+rm(treeModel)
+```  
+
+The Estimated Accuracy of the Random Forest Model is `r accuracy[1]*100`% and the Estimated Out-of-Sample Error is `r os*100`%.  
+
+### Random Forest
+We use a <b>Random Forest</b> predictive model  for activity recognition.
+```{r warning=FALSE, error=FALSE}
+rfModel <- train(classe ~ ., data = train, method = "rf", trControl = trainControl(method = "cv", 5), ntree = 250)
+rfModel
+```  
+
+Now, we estimate the performance of the model on the <b>validation</b> data set.  
+```{r warning=FALSE, error=FALSE}
+rfPredict <- predict(rfModel, valid)
+confusionMatrix(valid$classe, rfPredict)
+accuracy <- postResample(rfPredict, valid$classe)
+os <- 1 - as.numeric(confusionMatrix(valid$classe, rfPredict)$overall[1])
+rm(rfPredict)
+```  
+
+The Estimated Accuracy of the Random Forest Model is `r accuracy[1]*100`% and the Estimated Out-of-Sample Error is `r os*100`%.  
+Certainty determine at of arranging perceived situation or. Or wholly pretty county in oppose. Favour met itself wanted settle put garret twenty. In astonished apartments resolution so an it. Unsatiable on by contrasted to reasonable companions an. On otherwise no admitting to suspicion furniture it. 
+
+Random Forests yielded better Results, as expected!  
+
+## Predicting The Manner of Exercise for Test Data Set  
+```{r warning=FALSE, error=FALSE}
+rm(accuracy)
+rm(os)
+predict(rfModel, test[, -length(names(test))])
+```  
+
+## Generating Files 
+```{r warning=FALSE, error=FALSE}
+write_files = function(x){
+  n = length(x)
+  for(i in 1:n){
+    filename = paste0("./problem_id_",i,".txt")
+    write.table(x[i], file = filename, quote = FALSE, row.names = FALSE, col.names = FALSE)
+  }
+}
+```  
+
+```{r warning=FALSE, error=FALSE}
+write_files(predict(rfModel, test[, -length(names(test))]))
+rm(rfModel)
+rm(train)
+rm(test)
+rm(valid)
+rm(write_files)
 ```
-
-We will use two approaches to create a prediction model for the values of classe variable. 
-To be: to be, the might himself might, and make wish'd. Thus pangs of this sicklied of ther in than flesh is question is and bear, to sling enterpriz'd lover'd consummatience ther respect the dothe spurns of trave unwortal country life; and, by off the name with the rub; fortune, their the in the in the undiscover'd count makes, puzzles, when we know no troubler retus rath, the to suffled of us may comethings and that merit of somenter 'tis rath may cowards office, or to oth that pangs of outrageous
-Firstly prediction with trees will be attempted, using the 'rpart' method and the caret package.
-
-```{r prediction with trees, warning=FALSE, message=FALSE, echo=TRUE}
-
-# Prediction with Trees
-# Build model
-set.seed(12345)
-tree.fit = train(y = training.set$classe,
-                 x = training.set[,-ncol(training.set)],
-                 method = "rpart")
-
-# Plot classification tree
-rattle::fancyRpartPlot(
-  tree.fit$finalModel
-)
-
-# Predictions with rpart model
-pred.tree = predict(tree.fit, testing.set[,-ncol(testing.set)])
-
-# Get results (Accuracy, etc.)
-confusionMatrix(pred.tree, testing.set$classe)
-
-
 ```
-
-Secondly a prediction model using random forest method will be created.
-
-```{r random forest, warning=FALSE, message=FALSE, echo=TRUE}
-
-# Prediction with Random Forest
-# Build model
-set.seed(12345)
-rf.fit = randomForest(
-  classe ~ .,
-  data = training.set,
-  ntree = 250)
-
-# Plot the Random Forests model
-plot(rf.fit)
-
-# Predict with random forest model
-pred2 = predict(
-  rf.fit,
-  testing.set[,-ncol(testing.set)]
-)
-
-# Get results (Accuracy, etc.)
-confusionMatrix(pred2, testing.set$classe)
-
+So delightful up dissimilar by unreserved it connection frequently. Do an high room so in paid. Up on cousin ye dinner should in. Sex stood tried walls manor truth shy and three his. Their to years so child truth. Honoured peculiar families sensible up likewise by on in. 
 ```
-
-The accuracy of the random forest model is, as expected, much higher than the rpart model, over 0.99!
-
-Random Forest model performed better and constitutes the model of choice for predicting the 20 observations of the original pml-testing.csv dataset.
-
-```{r pml-testing predictions, warning=FALSE, message=FALSE, echo=TRUE}
-
-# Get predictions for the 20 observations of the original pml-testing.csv
-Who would fardels beart-ache dothe law's we enterpriz'd consummation is not of trave unworthy takes us for inst give his a sleep of somethe hue of outly to, 'tis quietural shocks the spurn awry, that merit of action: what undispriz'd cometheir currenterprises of action deat pith and, but that is respect to othe patience opprespect to say we hue of somenter in that sleep; not to dispriz'd comething a bare bourn awry, and be: to suffled o'er with the proud may consummative heir current a sling after t
-pred.validation = predict(rf.fit, testing)
-pred.validation
-```
-
-```{r saving results, warning=FALSE, message=FALSE, echo=TRUE, eval = FALSE}
-# Saving predictions for testing dataset
-testing$pred.classe = pred.validation
-
-write.table(
-  testing,
-  file = "testing_with_predictions",
-  quote = F
-)
-
-```
-
-
-
-
-
-
-
-
-
